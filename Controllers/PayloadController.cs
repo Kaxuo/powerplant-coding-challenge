@@ -24,9 +24,11 @@ namespace powerplant_coding_challenge.Controllers
         {
             try
             {
-                var test = payload;
-                System.Console.WriteLine(test);
-                return Ok(test);
+                var load = payload.load;
+                var fuels = payload.fuels;
+                var powerplants = payload.powerplants;
+                var response = powerplants.Select(powerplants => new Response(powerplants.name, 1)).ToArray();
+                return Ok(response);
             }
             catch (Exception ex)
             {
