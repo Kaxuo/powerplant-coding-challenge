@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "dTwqh+WZhjtTT3vQJKka5NyU5ymeWtAwkPloIcXKfzRKYNPgr98G0VYaMv3vtzEo8UiUoT7rwKoZF+utNE41CQ==",
+  "dgSpecHash": "pIw4RL61jlJoTyneSMDvchV31qd3E8knBchLkI2AVeFs5VbgV/8qAd4GrpNXMFJizaWZCd68dnuZBFtoiBiE9A==",
   "success": true,
   "projectFilePath": "C:\\Users\\Kaxuo\\OneDrive\\Desktop\\Work\\ChallengeEngie\\powerplant-coding-challenge\\powerplant-coding-challenge.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Kaxuo\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.0\\microsoft.aspnetcore.jsonpatch.3.1.0.nupkg.sha512",
+    "C:\\Users\\Kaxuo\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.0\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.0.nupkg.sha512",
+    "C:\\Users\\Kaxuo\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\Kaxuo\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\Kaxuo\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\Kaxuo\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\Kaxuo\\.nuget\\packages"
+    ]
+  }
+}
