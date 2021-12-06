@@ -7,5 +7,6 @@ namespace powerplant_coding_challenge.Models
         public decimal efficiency { get; set; }
         public int pmin { get; set; }
         public int pmax { get; set; }
+        public int power { get; set; } = 0;
     }
 }
