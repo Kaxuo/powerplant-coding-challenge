@@ -6,8 +6,10 @@
 - Clone or download the repository (if you download it, don't forget to extract it)
 - In a terminal , Move to the root folder of the repository
 - type the command "dotnet run"
-- You can now make a post request at "https://localhost:8888/productionplan"
+- You can now make a POST request at "https://localhost:8888/productionplan"
+- You can make a POST request with programs such as POSTMAN
 - Make sure the body/payload is sent along with the POST request
+- Make sure the body/payload is sent as a json
 - Make sure the body/payload fits the model (an example is provided below, you can just copy paste it and change the values)
 - You will get the power needed on each powerplants to fullfill the load
 
@@ -15,7 +17,9 @@
 
 - If you do not wish to clone or download the repository , you can make the POST request at a specific URL
 - You can make a post request at "genesis-challenge.francecentral.azurecontainer.io/productionplan"
+- You can make a POST request with programs such as POSTMAN
 - Make sure the body/payload is sent along with the POST request
+- Make sure the body/payload is sent as a json
 - Make sure the body/payload fits the model (an example is provided below, you can just copy paste it and change the values)
 - This URL contains the deployed docker image of the REST API
 
@@ -85,9 +89,11 @@
   ]
 }
 ```
-## Issues 
+
+## Issues
 
 If there are any issues , make sure
+
 - that you typed "dotnet restore" and then "dotnet run"
 - that the payload is in the appropriate format (such as the example above)
-- that you're sending the body to the correct url : "https://localhost:8888/productionplan" or "genesis-challenge.francecentral.azurecontainer.io/productionplan" 
+- that you're sending the body to the correct url : "https://localhost:8888/productionplan" or "genesis-challenge.francecentral.azurecontainer.io/productionplan"
