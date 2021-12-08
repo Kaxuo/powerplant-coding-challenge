@@ -86,3 +86,10 @@
   ]
 }
 ```
+## Issues 
+
+If there are any issues , make sure
+- that you typed dotnet restore
+- that the server is running through dotnet run
+- that the payload is in the appropriate format (such as the example above)
+- that you're sending the body to the correct url : "https://localhost:8888/productionplan" or "genesis-challenge.francecentral.azurecontainer.io/productionplan" 
