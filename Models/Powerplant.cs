@@ -1,6 +1,6 @@
 namespace powerplant_coding_challenge.Models
 {
-    public class Powerplants
+    public class Powerplant
     {
         public string name { get; set; }
         public string type { get; set; }

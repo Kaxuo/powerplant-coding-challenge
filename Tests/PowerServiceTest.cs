@@ -1,23 +1,21 @@
-using System.Globalization;
 using System.IO;
-using System;
 using Xunit;
-using powerplant_coding_challenge.Methods;
 using powerplant_coding_challenge.Models;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using Xunit.Abstractions;
 using System.Linq;
+using powerplant_coding_challenge.Methods;
 
 namespace powerplant_coding_challenge.Tests
 {
-    public class GetPowerTest
+    public class PowerServiceTest : IClassFixture<PowerService>
     {
-        private readonly ITestOutputHelper output;
-        public GetPowerTest(ITestOutputHelper output)
+        private readonly PowerService powerService;
+        public PowerServiceTest(PowerService powerService)
         {
-            this.output = output;
+            this.powerService = powerService;
         }
+        
         [Theory]
         [InlineData("/example_payloads/payload1.json")]
         [InlineData("/example_payloads/payload2.json")]
@@ -32,7 +30,8 @@ namespace powerplant_coding_challenge.Tests
                 string json = r.ReadToEnd();
                 payload = JsonConvert.DeserializeObject<List<Payload>>(json);
             }
-            var result = GetPower.GetPowerUsage(payload[0].powerplants, payload[0].load, payload[0].fuels.Wind);
+
+            var result = powerService.GetPowerUsage(payload[0].powerplants, payload[0].load, payload[0].fuels.Wind);
             var totalPower = result.Select(powerplant => powerplant.power);
             Assert.Equal(payload[0].load, totalPower.Sum());
             foreach (var powerplant in result)

@@ -2,17 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using powerplant_coding_challenge.Models;
+using powerplant_coding_challenge.Services;
 
 namespace powerplant_coding_challenge.Methods
 {
-    public class GetPower
+    public class PowerService : IPowerService
     {
-        public static int GetTurbinePower(double power, double wind)
+        public int GetTurbinePower(double power, double wind)
         {
             var multiplier = wind / 100;
             return Convert.ToInt32(power * multiplier);
         }
-        public static List<Powerplants> GetPowerUsage(List<Powerplants> powerplants, int load, int wind)
+        public List<Powerplant> GetPowerUsage(List<Powerplant> powerplants, int load, int wind)
         {
             var powerProvided = 0;
             var overload = 0;

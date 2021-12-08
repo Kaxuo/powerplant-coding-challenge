@@ -6,10 +6,10 @@ namespace powerplant_coding_challenge.Models
     {
         public Payload()
         {
-            powerplants = new List<Powerplants>();
+            powerplants = new List<Powerplant>();
         }
         public int load { get; set; }
         public Fuels fuels { get; set; }
-        public List<Powerplants> powerplants { get; set; }
+        public List<Powerplant> powerplants { get; set; }
     }
 }

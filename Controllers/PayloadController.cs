@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using powerplant_coding_challenge.Models;
+using powerplant_coding_challenge.Services;
 
 namespace powerplant_coding_challenge.Controllers
 {
@@ -13,11 +12,13 @@ namespace powerplant_coding_challenge.Controllers
     [Route("productionplan")]
     public class ProductionPlan : ControllerBase
     {
-        private readonly ILogger<ProductionPlan> _logger;
+        private readonly ILogger<ProductionPlan> logger;
+        private readonly IPowerService powerService;
 
-        public ProductionPlan(ILogger<ProductionPlan> logger)
+        public ProductionPlan(ILogger<ProductionPlan> logger, IPowerService powerService)
         {
-            _logger = logger;
+            this.logger = logger;
+            this.powerService = powerService;
         }
 
         [HttpPost]
@@ -28,7 +29,7 @@ namespace powerplant_coding_challenge.Controllers
                 var load = payload.load;
                 var fuels = payload.fuels;
                 var capacity = payload.powerplants.Select(powerplant => powerplant.pmax).ToArray();
-                var powerplants = new List<Powerplants>();
+                var powerplants = new List<Powerplant>();
                 var gasUsage = payload.powerplants.Where(powerplant => powerplant.type == "gasfired");
                 var keroseneUsage = payload.powerplants.Where(powerplant => powerplant.type == "turbojet");
                 var windUsage = payload.powerplants.Where(powerplant => powerplant.type == "windturbine");
@@ -37,13 +38,13 @@ namespace powerplant_coding_challenge.Controllers
                     powerplants.AddRange(windUsage);
                     powerplants.AddRange(gasUsage);
                     powerplants.AddRange(keroseneUsage);
-                    Methods.GetPower.GetPowerUsage(powerplants, load, fuels.Wind);
+                    powerService.GetPowerUsage(powerplants, load, fuels.Wind);
                 }
                 if (fuels.Wind == 0)
                 {
                     powerplants.AddRange(gasUsage);
                     powerplants.AddRange(keroseneUsage);
-                    Methods.GetPower.GetPowerUsage(powerplants, load, fuels.Wind);
+                    powerService.GetPowerUsage(powerplants, load, fuels.Wind);
                     powerplants.AddRange(windUsage);
                 }
                 var response = powerplants.Select(powerplant => new Response(powerplant.name, powerplant.power));
