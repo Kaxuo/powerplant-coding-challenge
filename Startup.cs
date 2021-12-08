@@ -22,6 +22,7 @@ namespace powerplant_coding_challenge
         {
             services.AddControllers().AddNewtonsoftJson();
             services.AddScoped<IPowerService, PowerService>();
+            services.AddScoped<Logging.Error>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

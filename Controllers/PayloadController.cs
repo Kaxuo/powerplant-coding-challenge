@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using powerplant_coding_challenge.Logging;
 using powerplant_coding_challenge.Models;
 using powerplant_coding_challenge.Services;
 
@@ -12,10 +12,9 @@ namespace powerplant_coding_challenge.Controllers
     [Route("productionplan")]
     public class ProductionPlan : ControllerBase
     {
-        private readonly ILogger<ProductionPlan> logger;
+        private readonly Error logger;
         private readonly IPowerService powerService;
-
-        public ProductionPlan(ILogger<ProductionPlan> logger, IPowerService powerService)
+        public ProductionPlan(Error logger, IPowerService powerService)
         {
             this.logger = logger;
             this.powerService = powerService;
@@ -50,24 +49,20 @@ namespace powerplant_coding_challenge.Controllers
                 var response = powerplants.Select(powerplant => new Response(powerplant.name, powerplant.power));
                 if (load > capacity.Sum())
                 {
-                    var logger = new Logging.Error();
                     logger.Log("Load too high, not enough powerplants");
                 }
                 if (load < powerplants[0].pmin)
                 {
-                    var logger = new Logging.Error();
                     logger.Log("Load too low, some power will be wasted");
                 }
                 return Ok(response);
-
             }
             catch (Exception ex)
             {
-                var logger = new Logging.Error();
-                logger.Log(ex.Message);
+                var logger222 = new Logging.Error();
+                logger222.Log(ex.Message);
                 return BadRequest(new { message = ex.Message });
             }
-
         }
     }
 }
