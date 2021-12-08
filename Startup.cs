@@ -36,7 +36,7 @@ namespace powerplant_coding_challenge
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 

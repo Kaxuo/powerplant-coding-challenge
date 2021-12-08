@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,7 @@ namespace powerplant_coding_challenge.Controllers
             {
                 var load = payload.load;
                 var fuels = payload.fuels;
+                var capacity = payload.powerplants.Select(powerplant => powerplant.pmax).ToArray();
                 var powerplants = new List<Powerplants>();
                 var gasUsage = payload.powerplants.Where(powerplant => powerplant.type == "gasfired");
                 var keroseneUsage = payload.powerplants.Where(powerplant => powerplant.type == "turbojet");
@@ -35,62 +37,36 @@ namespace powerplant_coding_challenge.Controllers
                     powerplants.AddRange(windUsage);
                     powerplants.AddRange(gasUsage);
                     powerplants.AddRange(keroseneUsage);
-                    GetPowerUsage(powerplants, load);
+                    Methods.GetPower.GetPowerUsage(powerplants, load, fuels.Wind);
                 }
                 if (fuels.Wind == 0)
                 {
                     powerplants.AddRange(gasUsage);
                     powerplants.AddRange(keroseneUsage);
-                    GetPowerUsage(powerplants, load);
+                    Methods.GetPower.GetPowerUsage(powerplants, load, fuels.Wind);
                     powerplants.AddRange(windUsage);
                 }
-                return Ok(powerplants);
+                var response = powerplants.Select(powerplant => new Response(powerplant.name, powerplant.power));
+                if (load > capacity.Sum())
+                {
+                    var logger = new Logging.Error();
+                    logger.Log("Load too high, not enough powerplants");
+                }
+                if (load < powerplants[0].pmin)
+                {
+                    var logger = new Logging.Error();
+                    logger.Log("Load too low, some power will be wasted");
+                }
+                return Ok(response);
+
             }
             catch (Exception ex)
             {
+                var logger = new Logging.Error();
+                logger.Log(ex.Message);
                 return BadRequest(new { message = ex.Message });
             }
 
-        }
-        public static double GetTurbinePower(double power, double wind)
-        {
-            var multiplier = wind / 100;
-            return power * multiplier;
-        }
-        public static List<Powerplants> GetPowerUsage(List<Powerplants> powerplants, int load)
-        {
-            var powerProvided = 0;
-            var overload = 0;
-            foreach (var powerplant in powerplants)
-            {
-                powerProvided += powerplant.pmax;
-                powerplant.power = powerplant.pmax;
-                if (powerProvided >= load)
-                {
-                    break;
-                }
-            }
-            overload = powerProvided - load;
-            if (overload > 0)
-            {
-                foreach (var powerplant in powerplants.Where(powerplant => powerplant.power != 0).Reverse())
-                {
-                    var tempValue = powerplant.power - overload;
-                    if (tempValue < powerplant.pmin)
-                    {
-                        var difference = powerplant.power - powerplant.pmin;
-                        overload -= difference;
-                        powerplant.power = powerplant.pmin;
-                    }
-                    else
-                    {
-                        powerplant.power = tempValue;
-                        overload = 0;
-                        break;
-                    }
-                }
-            }
-            return powerplants;
         }
     }
 }
