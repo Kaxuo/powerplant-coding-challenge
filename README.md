@@ -5,7 +5,6 @@
 - Make sure you have .NET installed
 - Clone or download the repository (if you download it, don't forget to extract it)
 - In a terminal , Move to the root folder of the repository
-- type the command "dotnet restore"
 - type the command "dotnet run"
 - You can now make a post request to "https://localhost:8888/productionplan"
 - Make sure the body/payload is sent along with the POST request
@@ -89,7 +88,6 @@
 ## Issues 
 
 If there are any issues , make sure
-- that you typed dotnet restore
-- that the server is running through dotnet run
+- that you typed "dotnet restore" and then "dotnet run"
 - that the payload is in the appropriate format (such as the example above)
 - that you're sending the body to the correct url : "https://localhost:8888/productionplan" or "genesis-challenge.francecentral.azurecontainer.io/productionplan" 
