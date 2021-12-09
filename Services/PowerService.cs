@@ -8,8 +8,12 @@ namespace powerplant_coding_challenge.Methods
 {
     public class PowerService : IPowerService
     {
-        public int GetTurbinePower(double power, double wind)
+        private static int GetTurbinePower(double power, double wind)
         {
+            if (wind < 0)
+            {
+                wind = 0;
+            }
             var multiplier = wind / 100;
             return Convert.ToInt32(power * multiplier);
         }
@@ -21,15 +25,15 @@ namespace powerplant_coding_challenge.Methods
             {
                 if (powerplant.type == "windturbine")
                 {
-                    powerProvided += GetTurbinePower(powerplant.pmax, wind);
+
                     powerplant.power = GetTurbinePower(powerplant.pmax, wind);
+                    powerProvided += powerplant.power;
                 }
                 else
                 {
                     powerProvided += powerplant.pmax;
                     powerplant.power = powerplant.pmax;
                 }
-
                 if (powerProvided >= load)
                 {
                     break;

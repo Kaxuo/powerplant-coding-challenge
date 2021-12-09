@@ -19,9 +19,8 @@ namespace powerplant_coding_challenge.Controllers
             this.logger = logger;
             this.powerService = powerService;
         }
-
         [HttpPost]
-        public ActionResult<Fuels> Post(Payload payload)
+        public ActionResult<List<Response>> Post(Payload payload)
         {
             try
             {
@@ -32,17 +31,15 @@ namespace powerplant_coding_challenge.Controllers
                 var gasUsage = payload.powerplants.Where(powerplant => powerplant.type == "gasfired");
                 var keroseneUsage = payload.powerplants.Where(powerplant => powerplant.type == "turbojet");
                 var windUsage = payload.powerplants.Where(powerplant => powerplant.type == "windturbine");
+                powerplants.AddRange(gasUsage);
+                powerplants.AddRange(keroseneUsage);
                 if (fuels.Wind > 0)
                 {
                     powerplants.AddRange(windUsage);
-                    powerplants.AddRange(gasUsage);
-                    powerplants.AddRange(keroseneUsage);
                     powerService.GetPowerUsage(powerplants, load, fuels.Wind);
                 }
-                if (fuels.Wind == 0)
+                else
                 {
-                    powerplants.AddRange(gasUsage);
-                    powerplants.AddRange(keroseneUsage);
                     powerService.GetPowerUsage(powerplants, load, fuels.Wind);
                     powerplants.AddRange(windUsage);
                 }
@@ -59,9 +56,8 @@ namespace powerplant_coding_challenge.Controllers
             }
             catch (Exception ex)
             {
-                var logger222 = new Logging.Error();
-                logger222.Log(ex.Message);
-                return BadRequest(new { message = ex.Message });
+                logger.Log(ex.Message);
+                return BadRequest(new { message = "Something bad happened" });
             }
         }
     }
