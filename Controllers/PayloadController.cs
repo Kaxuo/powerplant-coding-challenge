@@ -31,15 +31,17 @@ namespace powerplant_coding_challenge.Controllers
                 var gasUsage = payload.powerplants.Where(powerplant => powerplant.type == "gasfired");
                 var keroseneUsage = payload.powerplants.Where(powerplant => powerplant.type == "turbojet");
                 var windUsage = payload.powerplants.Where(powerplant => powerplant.type == "windturbine");
-                powerplants.AddRange(gasUsage);
-                powerplants.AddRange(keroseneUsage);
                 if (fuels.Wind > 0)
                 {
                     powerplants.AddRange(windUsage);
+                    powerplants.AddRange(gasUsage);
+                    powerplants.AddRange(keroseneUsage);
                     powerService.GetPowerUsage(powerplants, load, fuels.Wind);
                 }
                 else
                 {
+                    powerplants.AddRange(gasUsage);
+                    powerplants.AddRange(keroseneUsage);
                     powerService.GetPowerUsage(powerplants, load, fuels.Wind);
                     powerplants.AddRange(windUsage);
                 }
